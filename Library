@@ -1510,7 +1510,7 @@ function UILIB.newTab(name, img)
 		local newLabel = reserved.Label:Clone()
 		newLabel.Parent = newTab
 		newLabel.Visible = true
-		newLabel.Title.Text = text
+		newLabel.Title.Text = tostring(text)
 
 		return newLabel.Title
 	end
@@ -1518,7 +1518,7 @@ function UILIB.newTab(name, img)
         function self.editLabel(newLabel, text)
 		newLabel.Parent = newTab
 		newLabel.Visible = true
-		newLabel.Title.Text = text
+		newLabel.Title.Text = tostring(text)
 
 		return newLabel.Title
         end
