@@ -1258,10 +1258,10 @@ RS["93"] = Instance.new("ModuleScript", RS["1"]);
 RS["93"]["Name"] = [[Library]];
 
 -- Require RS wrapper
-local DRR_REQUIRE = require;
-local DRR_MODULES = {};
+local RS_REQUIRE = require;
+local RS_MODULES = {};
 local function require(Module:ModuleScript)
-    local ModuleState = DRR_MODULES[Module];
+    local ModuleState = RS_MODULES[Module];
     if ModuleState then
         if not ModuleState.Required then
             ModuleState.Required = true;
@@ -1269,10 +1269,10 @@ local function require(Module:ModuleScript)
         end
         return ModuleState.Value;
     end;
-    return DRR_REQUIRE(Module);
+    return RS_REQUIRE(Module);
 end
 
-DRR_MODULES[RS["93"]] = {
+RS_MODULES[RS["93"]] = {
 Closure = function()
     local script = RS["93"];
 local UILIB = {}
@@ -1380,10 +1380,10 @@ function UILIB:Load(name, img, direction)
 		RS["1f"].Visible = false
 	end
         function self:Hide()
-		RS["1"].Enabled = false
+		DDR["1"].Enabled = false
 	end
 	function self:Show()
-		RS["1"].Enabled = true
+		DDR["1"].Enabled = true
         end
 	function self:Toggle()
 		if closed == false then
