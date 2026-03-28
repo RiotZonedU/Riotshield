@@ -1474,7 +1474,7 @@ function UILIB.newTab(name, img)
 
 	local function updateTabs(selectedName)
 		for _, v in ipairs(parent.TopBar.ScrollingFrame:GetChildren()) do
-			if v:IsA("ImageButton") then
+if v:IsA("ImageButton") or v.Name == "TabButtonReserved" then
 				local vTab = parent.MainBar:FindFirstChild(v.Name)
 				if vTab then
 					if v.Name == selectedName then
@@ -1511,8 +1511,8 @@ function UILIB.newTab(name, img)
 	function self.newButton(name, desc, func)
 		local newbtn = reserved.Button:Clone()
 		newbtn.Parent = newTab
-		newbtn.Title.Text = tostring(name)
-		newbtn.Description.Text = tostring(desc)
+newbtn.Title.Text = tostring(name or "")
+newbtn.Description.Text = tostring(desc or "")
 		newbtn.Visible = true
 		newbtn.Name = tostring(name)
 
