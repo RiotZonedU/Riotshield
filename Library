@@ -1503,7 +1503,13 @@ function UILIB.newTab(name, img)
 
 			twBtn:Play()
 		end)
-		newbtn.MouseButton1Click:Connect(func)
+		if type(func) == "function" then
+			newbtn.MouseButton1Click:Connect(func)
+		else
+			newbtn.MouseButton1Click:Connect(function()
+				warn("Riotshield: newButton callback is not a function")
+			end)
+		end
 	end
 
 	function self.newLabel(text)
