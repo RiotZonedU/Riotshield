@@ -1377,14 +1377,20 @@ function UILIB:Load(name, img, direction)
 		tw3:Play()
 	end
 	function self:HideCloseButton()
-		DRR["1f"].Visible = false
+		if parent and parent.TopBar and parent.TopBar.TopBarClose then
+			parent.TopBar.TopBarClose.Visible = false
+		end
 	end
-        function self:Hide()
-		DDR["1"].Enabled = false
+	function self:Hide()
+		if parent and parent.Enabled ~= nil then
+			parent.Enabled = false
+		end
 	end
 	function self:Show()
-		DDR["1"].Enabled = true
-        end
+		if parent and parent.Enabled ~= nil then
+			parent.Enabled = true
+		end
+	end
 	function self:Toggle()
 		if closed == false then
 			closed = true
@@ -1430,6 +1436,7 @@ function UILIB:Load(name, img, direction)
 		end
 	end
 
+	return self
 end
 
 
@@ -1502,10 +1509,10 @@ function UILIB.newTab(name, img)
 	function self.newButton(name, desc, func)
 		local newbtn = reserved.Button:Clone()
 		newbtn.Parent = newTab
-		newbtn.Title.Text = name
-		newbtn.Description.Text = desc
+		newbtn.Title.Text = tostring(name)
+		newbtn.Description.Text = tostring(desc)
 		newbtn.Visible = true
-		newbtn.Name = name
+		newbtn.Name = tostring(name)
 
 		newbtn.MouseEnter:Connect(function()
 			local twBtn = twServ:Create(newbtn, TweenInfo.new(0.2), { Transparency = 0 })
@@ -1517,14 +1524,20 @@ function UILIB.newTab(name, img)
 
 			twBtn:Play()
 		end)
-		newbtn.MouseButton1Click:Connect(func)
+		if type(func) == "function" then
+			newbtn.MouseButton1Click:Connect(func)
+		else
+			newbtn.MouseButton1Click:Connect(function()
+				warn("Riotshield: newButton callback is not a function")
+			end)
+		end
 	end
 
 	function self.newLabel(text)
 		local newLabel = reserved.Label:Clone()
 		newLabel.Parent = newTab
 		newLabel.Visible = true
-		newLabel.Title.Text = text
+		newLabel.Title.Text = tostring(text)
 
 		return newLabel.Title
 	end
@@ -1532,7 +1545,7 @@ function UILIB.newTab(name, img)
         function self.editLabel(newLabel, text)
 		newLabel.Parent = newTab
 		newLabel.Visible = true
-		newLabel.Title.Text = text
+		newLabel.Title.Text = tostring(text)
 
 		return newLabel.Title
         end
@@ -1556,12 +1569,14 @@ function UILIB.newTab(name, img)
 
 		newInput.Visible = true
 		newInput.Parent = newTab
-		newInput.Title.Text = name
-		newInput.Description.Text = desc
-		newInput.Name = name
+		newInput.Title.Text = tostring(name)
+		newInput.Description.Text = tostring(desc)
+		newInput.Name = tostring(name)
 
 		textbox.FocusLost:Connect(function()
-			func(textbox.Text)
+			if type(func) == "function" then
+				func(textbox.Text)
+			end
 		end)
 
 	end
@@ -1649,10 +1664,10 @@ function UILIB.newTab(name, img)
 			twBtn:Play()
 		end)
 		newSlider.Visible = true
-		newSlider.Name = name
+		newSlider.Name = tostring(name)
 		newSlider.Parent = newTab
-		newSlider.Title.Text = name
-		newSlider.Description.Text = desc
+		newSlider.Title.Text = tostring(name)
+		newSlider.Description.Text = tostring(desc)
 
 		local Mouse = game.Players.LocalPlayer:GetMouse()
 		local tweenServ = twServ
@@ -1699,10 +1714,10 @@ function UILIB.newTab(name, img)
 		local realToggle = toggle
 		local newToggle = reserved.Toggle:Clone()
 		newToggle.Parent = newTab
-		newToggle.Name = title
+		newToggle.Name = tostring(title)
 		newToggle.Visible = true
-		newToggle.Title.Text = title
-		newToggle.Description.Text = desc
+		newToggle.Title.Text = tostring(title)
+		newToggle.Description.Text = tostring(desc)
 		
 		
 		newToggle.MouseEnter:Connect(function()
@@ -1749,11 +1764,21 @@ function UILIB.newTab(name, img)
 		newdd.Visible = true
 		newdd.Parent = newTab
 		
-		newdd.Name = name
-		newdd.Title.Text = name
-		newdd.Description.Text = desc
+		newdd.Name = tostring(name)
+		newdd.Title.Text = tostring(name)
+		newdd.Description.Text = tostring(desc)
 		
-		for i, list in ipairs(listTable) do
+		local items = listTable
+		if type(items) == "string" then
+			items = {}
+			for item in string.gmatch(listTable, "[^,%s]+") do
+				table.insert(items, item)
+			end
+		elseif type(items) ~= "table" then
+			items = { tostring(items) }
+		end
+		
+		for i, list in ipairs(items) do
 			local newddbtn = reserved.DropdownButton:Clone()
 			newddbtn.Visible = true
 			newddbtn.Parent = newdd.Box.ScrollingFrame
