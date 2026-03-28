@@ -199,7 +199,7 @@ DRR["1a"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
 DRR["1a"]["AutomaticSize"] = Enum.AutomaticSize.X;
 DRR["1a"]["Size"] = UDim2.new(0.33195531368255615, 0, 0.41530051827430725, 0);
 DRR["1a"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
-DRR["1a"]["Text"] = [[00:00]];
+DRR["1a"]["Text"] = "00:00";
 DRR["1a"]["BackgroundTransparency"] = 1;
 DRR["1a"]["Position"] = UDim2.new(0.21512815356254578, 0, 0.27320244908332825, 0);
 
@@ -1301,12 +1301,13 @@ function UILIB:Load(name, img, direction)
 			task.wait(0.3)
 			tw2:Play()
 	end)
-        task.spawn(function()
-	     while true do
-		task.wait(0.1)
-		parent.TopBar.ProfileMenu.Clock.TextLabel.Text = os.date("%H:%m")
-	     end
-        end)
+	local startTime = tick()
+	task.spawn(function()
+		while true do
+			task.wait(0.1)
+			parent.TopBar.ProfileMenu.Clock.TextLabel.Text = string.format("%02d:%02d", math.floor((tick() - startTime)/60), math.floor((tick() - startTime)%60))
+		end
+	end)
 	parent.TopBar.ProfileMenu.Title.TextLabel.Text = name
 	if img then
 		parent.MainBar.Logo.Image = img
