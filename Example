@@ -2,10 +2,10 @@
 local RiotshieldLibrary = loadstring(game:HttpGet("https://raw.githubusercontent.com/AZYsGithub/DrRay-UI-Library/main/DrRay.lua"))()
 
 -- Create a new window and set its title and theme
-local window = DrRayLibrary:Load("Riotshield", "Default")
+local window = RiotshieldLibrary:Load("Riotshield", "Default")
 
 -- Create the first tab with an image ID
-local tab1 = DrRayLibrary.newTab("Tab 1", "ImageIdHere")
+local tab1 = RiotshieldLibrary.newTab("Tab 1", "ImageIdHere")
 
 -- Add elements to the first tab
 tab1.newLabel("Hello, this is Tab 1.")
@@ -24,7 +24,7 @@ tab1.newInput("Input", "Prints your input.", function(text)
 end)
 
 -- Create the second tab with a different image ID
-local tab2 = DrRayLibrary.newTab("Tab 2", "ImageIdLogoHere")
+local tab2 = RiotshieldLibrary.newTab("Tab 2", "ImageIdLogoHere")
 
 -- Add elements to the second tab
 tab2.newLabel("Hello, this is Tab 2.")
