@@ -1448,13 +1448,14 @@ function UILIB.newTab(name, img)
 
 	local newTab = parent.Folder.TabReserved:Clone()
 	newTab.Parent = parent.MainBar
-	newTab.Name = name
+	local tabName = tostring(name or ("Tab" .. tostring(#parent.MainBar:GetChildren() - 4)))
+	newTab.Name = tabName
 	newTab.Visible = false
 
 	local newTabBtn = parent.Folder.TabButtonReserved:Clone()
 	newTabBtn.Parent = parent.TopBar.ScrollingFrame
-	newTabBtn.Name = name or "Tab"..#parent.MainBar:GetChildren() - 4
-	newTabBtn.Frame.TextLabel.Text = name
+	newTabBtn.Name = tabName
+	newTabBtn.Frame.TextLabel.Text = tostring(name)
 	if img then
 		newTabBtn.ImageLabel.Image = img
 	else
