@@ -1436,6 +1436,7 @@ function UILIB:Load(name, img, direction)
 		end
 	end
 
+	self.newTab = UILIB.newTab
 	return self
 end
 
