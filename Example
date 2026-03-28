@@ -1,26 +1,23 @@
 -- Load the DrRay library from the GitHub repository Library
-local RiotshieldLibrary = loadstring(game:HttpGet("https://raw.githubusercontent.com/AZYsGithub/DrRay-UI-Library/main/DrRay.lua"))()
+local RiotshieldLibrary = loadstring(game:HttpGet("https://raw.githubusercontent.com/RiotZonedU/Riotshield/refs/heads/main/Library"))()
 
 -- Create a new window and set its title and theme
 local window = RiotshieldLibrary:Load("Riotshield", "Default")
 
 -- Create the first tab with an image ID
-local tab1 = RiotshieldLibrary.newTab("Tab 1", "ImageIdHere")
+local Autoheal = RiotshieldLibrary.newTab("Autoheal", "ImageIdHere")
 
 -- Add elements to the first tab
-tab1.newLabel("Hello, this is Tab 1.")
-tab1.newButton("Button", "Prints Hello!", function()
-    print('Hello!')
-end)
-tab1.newToggle("Toggle", "Toggle! (prints the state)", true, function(toggleState)
+Autoheal.newLabel("Hello, this is Tab 1.")
+Autoheal.newToggle("Toggle", "Toggle! (prints the state)", true, function(toggleState)
     if toggleState then
         print("On")
     else
         print("Off")
     end
 end)
-tab1.newInput("Input", "Prints your input.", function(text)
-    print("Entered text in Tab 1: " .. text)
+Autoheal.newDropdown("Chunk Amount", "Select Heal Amount", {"1", "2", "3", "4", "5"}, function(selectedOption)
+    print(selectedOption)
 end)
 
 -- Create the second tab with a different image ID
