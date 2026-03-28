@@ -1,34 +1,36 @@
 local RiotshieldLibrary = loadstring(game:HttpGet("https://raw.githubusercontent.com/RiotZonedU/Riotshield/refs/heads/main/Library"))()
+assert(RiotshieldLibrary, "RiotshieldLibrary failed to load")
 
 local window = RiotshieldLibrary:Load("Riotshield", "Default")
+assert(window, "RiotshieldLibrary:Load returned nil")
 
 local Autoheal = window:newTab("Autoheal", "ImageIdHere")
 
-Autoheal.newLabel("Hello, this is Tab 1.")
-Autoheal.newToggle("Toggle", "Toggle! (prints the state)", true, function(toggleState)
+Autoheal:newLabel("Hello, this is Tab 1.")
+Autoheal:newToggle("Toggle", "Toggle! (prints the state)", true, function(toggleState)
     if toggleState then
         print("On")
     else
         print("Off")
     end
 end)
-Autoheal.newDropdown("Chunk Amount", "Select Heal Amount", {"1", "2", "3", "4", "5"}, function(selectedOption)
+Autoheal:newDropdown("Chunk Amount", "Select Heal Amount", {"1", "2", "3", "4", "5"}, function(selectedOption)
     print(selectedOption)
 end)
 
 local tab2 = window:newTab("Tab 2", "ImageIdLogoHere")
 
-tab2.newLabel("Hello, this is Tab 2.")
-tab2.newButton("Button", "Prints Hello!", function()
+tab2:newLabel("Hello, this is Tab 2.")
+tab2:newButton("Button", "Prints Hello!", function()
     print('Hello!')
 end)
-tab2.newToggle("Toggle", "Toggle! (prints the state)", true, function(toggleState)
+tab2:newToggle("Toggle", "Toggle! (prints the state)", true, function(toggleState)
     if toggleState then
         print("On")
     else
         print("Off")
     end
 end)
-tab2.newDropdown("Chunk Amount", "Select one of these options!", {"1", "2", "3", "4", "5"}, function(selectedOption)
+tab2:newDropdown("Chunk Amount", "Select one of these options!", {"1", "2", "3", "4", "5"}, function(selectedOption)
     print(selectedOption)
 end)
