@@ -1488,10 +1488,10 @@ function UILIB.newTab(name, img)
 	function self.newButton(name, desc, func)
 		local newbtn = reserved.Button:Clone()
 		newbtn.Parent = newTab
-		newbtn.Title.Text = name
-		newbtn.Description.Text = desc
+		newbtn.Title.Text = tostring(name)
+		newbtn.Description.Text = tostring(desc)
 		newbtn.Visible = true
-		newbtn.Name = name
+		newbtn.Name = tostring(name)
 
 		newbtn.MouseEnter:Connect(function()
 			local twBtn = twServ:Create(newbtn, TweenInfo.new(0.2), { Transparency = 0 })
