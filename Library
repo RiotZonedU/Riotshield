@@ -1276,8 +1276,8 @@ DRR_MODULES[DRR["93"]] = {
 Closure = function()
     local script = DRR["93"];
 local UILIB = {}
-local parent  = script.Parent
-local reserved = parent.Folder
+local parent = (script and script.Parent and script.Parent:FindFirstChild("Folder") and script.Parent) or DRR["1"]
+local reserved = parent and parent:FindFirstChild("Folder") or parent.Folder
 UILIB.__index = UILIB
 
 local listening = false
@@ -1442,46 +1442,62 @@ end
 
 
 
-function UILIB.newTab(name, img)	
+function UILIB.newTab(name, img)
 	local self = setmetatable({}, UILIB)
+
+	local tabName = tostring(name or ("Tab" .. tostring(#parent.MainBar:GetChildren() + 1)))
 
 	local newTab = parent.Folder.TabReserved:Clone()
 	newTab.Parent = parent.MainBar
-	newTab.Name = name
+	newTab.Name = tabName
 	newTab.Visible = false
 
 	local newTabBtn = parent.Folder.TabButtonReserved:Clone()
 	newTabBtn.Parent = parent.TopBar.ScrollingFrame
-	newTabBtn.Name = name or "Tab"..#parent.MainBar:GetChildren() - 4
-	newTabBtn.Frame.TextLabel.Text = name
+	newTabBtn.Name = tabName
+	newTabBtn.Frame.TextLabel.Text = tostring(name)
 	if img then
-		newTabBtn.ImageLabel.Image = img
+		newTabBtn.ImageLabel.Image = tostring(img)
 	else
 		newTabBtn.ImageLabel.Image = ""
 	end
 	newTabBtn.Visible = true
 
-	newTabBtn.MouseButton1Click:Connect(function()
-		for i,v in pairs(parent.TopBar.ScrollingFrame:GetChildren()) do
+	local function updateTabs(selectedName)
+		for _, v in ipairs(parent.TopBar.ScrollingFrame:GetChildren()) do
 			if v:IsA("ImageButton") then
 				local vTab = parent.MainBar:FindFirstChild(v.Name)
-				if v.Name ~= name then
-					local twBtn = twServ:Create(v, TweenInfo.new(0.2), { Transparency = 0.75})
-
-					twBtn:Play()
-
-					vTab.Visible = false
-				elseif v.Name == name then
-					vTab.Visible = true
-					local twBtn = twServ:Create(v, TweenInfo.new(0.2), { Transparency = 0 })
-
-					twBtn:Play()
-
+				if vTab then
+					if v.Name == selectedName then
+						vTab.Visible = true
+						local twBtn = twServ:Create(v, TweenInfo.new(0.2), { Transparency = 0 })
+						twBtn:Play()
+					else
+						vTab.Visible = false
+						local twBtn = twServ:Create(v, TweenInfo.new(0.2), { Transparency = 0.75 })
+						twBtn:Play()
+					end
 				end
-
 			end
 		end
+	end
+
+	newTabBtn.MouseButton1Click:Connect(function()
+		updateTabs(tabName)
 	end)
+
+	local hasVisibleTab = false
+	for _, child in ipairs(parent.MainBar:GetChildren()) do
+		if child:IsA("ScrollingFrame") or child:IsA("Frame") then
+			if child.Name ~= "DropShadowHolder" and child.Name ~= "DropShadow" and child.Name ~= "Logo" and child.Visible then
+				hasVisibleTab = true
+				break
+			end
+		end
+	end
+	if not hasVisibleTab then
+		updateTabs(tabName)
+	end
 
 	function self.newButton(name, desc, func)
 		local newbtn = reserved.Button:Clone()
