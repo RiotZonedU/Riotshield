@@ -1635,10 +1635,10 @@ function UILIB.newTab(name, img)
 			twBtn:Play()
 		end)
 		newSlider.Visible = true
-		newSlider.Name = name
+		newSlider.Name = tostring(name)
 		newSlider.Parent = newTab
-		newSlider.Title.Text = name
-		newSlider.Description.Text = desc
+		newSlider.Title.Text = tostring(name)
+		newSlider.Description.Text = tostring(desc)
 
 		local Mouse = game.Players.LocalPlayer:GetMouse()
 		local tweenServ = twServ
@@ -1685,10 +1685,10 @@ function UILIB.newTab(name, img)
 		local realToggle = toggle
 		local newToggle = reserved.Toggle:Clone()
 		newToggle.Parent = newTab
-		newToggle.Name = title
+		newToggle.Name = tostring(title)
 		newToggle.Visible = true
-		newToggle.Title.Text = title
-		newToggle.Description.Text = desc
+		newToggle.Title.Text = tostring(title)
+		newToggle.Description.Text = tostring(desc)
 		
 		
 		newToggle.MouseEnter:Connect(function()
@@ -1735,9 +1735,9 @@ function UILIB.newTab(name, img)
 		newdd.Visible = true
 		newdd.Parent = newTab
 		
-		newdd.Name = name
-		newdd.Title.Text = name
-		newdd.Description.Text = desc
+		newdd.Name = tostring(name)
+		newdd.Title.Text = tostring(name)
+		newdd.Description.Text = tostring(desc)
 		
 		for i, list in ipairs(listTable) do
 			local newddbtn = reserved.DropdownButton:Clone()
