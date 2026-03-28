@@ -1,5 +1,5 @@
 -- Load the DrRay library from the GitHub repository Library
-local RiotshieldLibrary = loadstring(game:HttpGet("https://raw.githubusercontent.com/RiotZonedU/Riotshield/refs/heads/main/Library"))()
+local RiotshieldLibrary = loadstring(game:HttpGet("https://raw.githubusercontent.com/RiotZonedU/Riotshield/refs/heads/main/Library.lua"))()
 
 -- Create a new window and set its title and theme
 local window = RiotshieldLibrary:Load("Riotshield", "Default")
