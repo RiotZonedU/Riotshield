@@ -1463,27 +1463,34 @@ function UILIB.newTab(name, img)
 	end
 	newTabBtn.Visible = true
 
-	newTabBtn.MouseButton1Click:Connect(function()
-		for i,v in pairs(parent.TopBar.ScrollingFrame:GetChildren()) do
+	local function updateTabs(selectedName)
+		for _, v in ipairs(parent.TopBar.ScrollingFrame:GetChildren()) do
 			if v:IsA("ImageButton") then
 				local vTab = parent.MainBar:FindFirstChild(v.Name)
-				if v.Name ~= name then
-					local twBtn = twServ:Create(v, TweenInfo.new(0.2), { Transparency = 0.75})
-
-					twBtn:Play()
-
-					vTab.Visible = false
-				elseif v.Name == name then
-					vTab.Visible = true
-					local twBtn = twServ:Create(v, TweenInfo.new(0.2), { Transparency = 0 })
-
-					twBtn:Play()
-
+				if vTab then
+					if v.Name == selectedName then
+						vTab.Visible = true
+						local twBtn = twServ:Create(v, TweenInfo.new(0.2), { Transparency = 0 })
+						twBtn:Play()
+					else
+						vTab.Visible = false
+						local twBtn = twServ:Create(v, TweenInfo.new(0.2), { Transparency = 0.75 })
+						twBtn:Play()
+					end
 				end
-
 			end
 		end
+	end
+
+	newTabBtn.MouseButton1Click:Connect(function()
+		updateTabs(tabName)
 	end)
+
+	-- Default first opening
+	if (#parent.MainBar:GetChildren() == 5) then
+		-- first user tab created: activate it
+		updateTabs(tabName)
+	end
 
 	function self.newButton(name, desc, func)
 		local newbtn = reserved.Button:Clone()
