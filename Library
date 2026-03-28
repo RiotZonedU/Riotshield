@@ -1739,7 +1739,17 @@ function UILIB.newTab(name, img)
 		newdd.Title.Text = tostring(name)
 		newdd.Description.Text = tostring(desc)
 		
-		for i, list in ipairs(listTable) do
+		local items = listTable
+		if type(items) == "string" then
+			items = {}
+			for item in string.gmatch(listTable, "[^,%s]+") do
+				table.insert(items, item)
+			end
+		elseif type(items) ~= "table" then
+			items = {tostring(items)}
+		end
+		
+		for i, list in ipairs(items) do
 			local newddbtn = reserved.DropdownButton:Clone()
 			newddbtn.Visible = true
 			newddbtn.Parent = newdd.Box.ScrollingFrame
